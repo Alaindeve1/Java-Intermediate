@@ -212,4 +212,8 @@ public class SimpleBankingApplication {
             }
         }
     }
+
+    public static void main(String[] args) {
+        new SimpleBankingApplication().run();
+    }
 }
