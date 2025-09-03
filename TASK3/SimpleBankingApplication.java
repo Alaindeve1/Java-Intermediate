@@ -160,3 +160,56 @@ public class SimpleBankingApplication {
         
         if (otherAccounts.isEmpty()) {
             System.out.println("❌ No other accounts available for transfer.");
+            return;
+        }
+
+        int index = getIntInput("Select target account by number: ") - 1;
+        if (index < 0 || index >= otherAccounts.size()) {
+            System.out.println("❌ Invalid selection.");
+            return;
+        }
+
+        BankAccount target = otherAccounts.get(index);
+        double amount = getDoubleInput("Enter amount to transfer: $");
+        currentAccount.transfer(target, amount);
+    }
+
+    // Display transaction history for current account
+    private void displayTransactionHistory() {
+        System.out.println("\n=== TRANSACTION HISTORY ===");
+        ArrayList<String> history = currentAccount.getTransactionHistory();
+        if (history.isEmpty()) {
+            System.out.println("No transactions yet.");
+            return;
+        }
+        for (int i = 0; i < history.size(); i++) {
+            System.out.println((i + 1) + ". " + history.get(i));
+        }
+    }
+
+    // Helper to read an integer with prompt and basic validation
+    private int getIntInput(String prompt) {
+        while (true) {
+            try {
+                System.out.print(prompt);
+                String line = scanner.nextLine().trim();
+                return Integer.parseInt(line);
+            } catch (NumberFormatException e) {
+                System.out.println("❌ Invalid number. Please try again.");
+            }
+        }
+    }
+
+    // Helper to read a double with prompt and basic validation
+    private double getDoubleInput(String prompt) {
+        while (true) {
+            try {
+                System.out.print(prompt);
+                String line = scanner.nextLine().trim();
+                return Double.parseDouble(line);
+            } catch (NumberFormatException e) {
+                System.out.println("❌ Invalid amount. Please enter a valid number.");
+            }
+        }
+    }
+}
